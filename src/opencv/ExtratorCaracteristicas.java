@@ -125,8 +125,15 @@ public class ExtratorCaracteristicas {
 
                     // verde calca zaca urubu
                     if (alt > (imagemProcessada.height() / 2)) {
-                        if (azul >= 0 && azul <= 56 && verde >= 0 && verde <= 50 && vermelho >= 0 && vermelho <= 40) {
+                        if (azul >= 10 && azul <= 50 && verde >= 44 && verde <= 145 && vermelho >= 12 && vermelho <= 75) {
                             verdeCalcaZecaUrubu++;
+                        }
+                    }
+
+                    // laranja pe zaca urubu
+                    if (alt > (imagemProcessada.height() / 2) + (imagemProcessada.height() / 4)) {
+                        if (azul >= 0 && azul <= 45 && verde >= 107 && verde <= 187 && vermelho >= 188 && vermelho <= 244) {
+                            laranjaPeZecaUrubu++;
                         }
                     }
                 }
@@ -152,8 +159,8 @@ public class ExtratorCaracteristicas {
             dados[i][6] = verdeCalcaZecaUrubu;
             dados[i][7] = laranjaPeZecaUrubu;
 
-            exportacao += dados[i][0] + "," + dados[i][1] + "," + dados[i][2] + "," + dados[i][3] + "," + dados[i][4] + "," + dados[i][5] + "," +
-                    dados[i][6] + "," + dados[i][7] + "," + classeDesenho + "\n";
+            exportacao += dados[i][0] + "," + dados[i][1] + "," + dados[i][2] + "," + dados[i][3] + "," + dados[i][4] +
+                    "," + dados[i][5] + "," + dados[i][6] + "," + dados[i][7] + "," + classeDesenho + "\n";
 
         }
 
