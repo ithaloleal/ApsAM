@@ -47,6 +47,7 @@ public class ExtratorCaracteristicas {
             laranjaPeZecaUrubu = 0;
 
             // atribui a imagem a variavel
+            System.out.println(diretorio.getAbsolutePath() + "\\" + arquivos[i].getName());
             opencv_core.IplImage imgOriginal = cvLoadImage(diretorio.getAbsolutePath() + "\\" + arquivos[i].getName());
             opencv_core.CvSize tamanhoImagemOriginal = cvGetSize(imgOriginal);
 
