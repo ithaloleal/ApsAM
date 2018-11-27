@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Class-Path: libs/javacv.jar libs/javacv-linux-x86_64.jar libs/javacv-l
+ inux-arm.jar libs/javacv-windows-x86_64.jar libs/javacv-macosx-x86_64
+ .jar libs/javacv-android-arm.jar libs/weka.jar libs/javacv-linux-x86.
+ jar libs/javacpp.jar libs/javacv-windows-x86.jar
+Main-Class: projeto.SelecionaImagem
+

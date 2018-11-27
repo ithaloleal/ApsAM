@@ -19,10 +19,7 @@ import weka.core.converters.ConverterUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -72,8 +69,8 @@ public class TelaCTR implements Initializable {
             double[] chance = perceptron.distributionForInstance(novo);
 
             DecimalFormat df = new DecimalFormat("0.##");
-            txtPicapau.setText("Pica-pau: "+df.format(chance[0] * 100) + "% chance");
-            txtZecaUrubu.setText("Zeca urubu: "+df.format(chance[1] * 100) + "% chance");
+            txtPicapau.setText("Pica-pau: " + df.format(chance[0] * 100) + "% chance");
+            txtZecaUrubu.setText("Zeca urubu: " + df.format(chance[1] * 100) + "% chance");
             System.out.println(chance[0]);
             System.out.println(chance[1]);
 

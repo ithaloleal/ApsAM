@@ -1,6 +1,5 @@
 package projeto;
 
-import com.googlecode.javacv.cpp.opencv_core;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.Debug;
@@ -8,9 +7,6 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils;
 
 import java.io.*;
-
-import static com.googlecode.javacv.cpp.opencv_core.*;
-import static com.googlecode.javacv.cpp.opencv_highgui.cvLoadImage;
 
 public class GeracaoArquivo {
 
@@ -35,30 +31,11 @@ public class GeracaoArquivo {
             File diretorio = new File("src\\imagens");
             File[] arquivos = diretorio.listFiles();
 
-            float vermelhoTopetePicaPau, amareloBicoPicaPau, amareloPePicaPau, azulCorpoPicaPau;
-            float laranjaBicoZecaUrubu, pretoCorpoZecaUrubu, verdeCalcaZecaUrubu, laranjaPeZecaUrubu;
-
-            float[][] dados = new float[200][8];
-
             // varre todas as imagens
             for (int i = 0; i < arquivos.length; i++) {
-                vermelhoTopetePicaPau = 0;
-                amareloBicoPicaPau = 0;
-                amareloPePicaPau = 0;
-                azulCorpoPicaPau = 0;
-                laranjaBicoZecaUrubu = 0;
-                pretoCorpoZecaUrubu = 0;
-                verdeCalcaZecaUrubu = 0;
-                laranjaPeZecaUrubu = 0;
 
                 // atribui a imagem a variavel
                 System.out.println(diretorio.getAbsolutePath() + "\\" + arquivos[i].getName());
-                opencv_core.IplImage imgOriginal = cvLoadImage(diretorio.getAbsolutePath() + "\\" + arquivos[i].getName());
-                opencv_core.CvSize tamanhoImagemOriginal = cvGetSize(imgOriginal);
-
-                // Imagem processada - tamanho, profundidade de cores e número de canais de cores
-                opencv_core.IplImage imagemProcessada = cvCreateImage(tamanhoImagemOriginal, IPL_DEPTH_8U, 3);
-                imagemProcessada = cvCloneImage(imgOriginal);
 
                 // Definição da classe - pica_pau
                 if (arquivos[i].getName().toLowerCase().charAt(0) == 'p') {
@@ -67,106 +44,10 @@ public class GeracaoArquivo {
                     classeDesenho = "zeca_urubu";
                 }
 
-                // Varre a imagem pixel a pixel
-                for (int alt = 0; alt < imagemProcessada.height(); alt++) {
-                    for (int larg = 0; larg < imagemProcessada.width(); larg++) {
+                float[] tmp = ExtratorCaracteristicaImagem.extrair(diretorio.getAbsolutePath() + "\\" + arquivos[i].getName());
 
-                        // pega o rgb da imagem pixel a pixel
-                        CvScalar rgb = cvGet2D(imagemProcessada, alt, larg);
-
-                        // cvGet2D atribui posicao 0 - azul / 1 - verde / 2 vermelho
-                        azul = rgb.val(0);
-                        verde = rgb.val(1);
-                        vermelho = rgb.val(2);
-
-                        /////////////////////////////////////////////////
-                        // INICIO CARACTERISTICAS PICA PAU
-                        /////////////////////////////////////////////////
-
-                        // topete pica pau
-                        if (alt <= (imagemProcessada.height() / 2)) {
-                            if (azul >= 0 && azul <= 79 && verde >= 162 && verde <= 254 && vermelho >= 181 && vermelho <= 236) {
-                                vermelhoTopetePicaPau++;
-                            }
-                        }
-
-                        // Amarelo bico pica-pau (metade para cima)
-                        if (alt <= (imagemProcessada.height() / 2)) {
-                            if (azul >= 0 && azul <= 42 && verde >= 162 && verde <= 254 && vermelho >= 214 && vermelho <= 255) {
-                                amareloBicoPicaPau++;
-                            }
-                        }
-
-                        // azul corpo pica pau
-                        if (azul >= 162 && azul <= 189 &&
-                                verde >= 47 && verde <= 115 &&
-                                vermelho >= 0 && vermelho <= 43) {
-                            azulCorpoPicaPau++;
-                        }
-
-                        // Amarelo pe pica-pau (parte de baixo da imagem)
-                        if (alt >= (imagemProcessada.height() / 2) + (imagemProcessada.height() / 3)) {
-                            if (azul >= 0 && azul <= 42 && verde >= 162 && verde <= 254 && vermelho >= 214 && vermelho <= 255) {
-                                amareloPePicaPau++;
-                            }
-                        }
-
-                        /////////////////////////////////////////////////
-                        // INICIO CARACTERISTICAS ZECA URUBU
-                        /////////////////////////////////////////////////
-
-                        // Laranja bico zeca_urubu (metade para cima)
-                        if (alt < (imagemProcessada.height() / 2)) {
-                            if (azul >= 0 && azul <= 45 && verde >= 107 && verde <= 187 && vermelho >= 188 && vermelho <= 244) {
-                                laranjaBicoZecaUrubu++;
-                            }
-                        }
-
-                        // preto corpo zeca urubu
-                        if (alt < ((imagemProcessada.height() / 2) + (imagemProcessada.height() / 4))) {
-                            if (azul >= 0 && azul <= 56 && verde >= 0 && verde <= 50 && vermelho >= 0 && vermelho <= 40) {
-                                pretoCorpoZecaUrubu++;
-                            }
-                        }
-
-                        // verde calca zaca urubu
-                        if (alt > (imagemProcessada.height() / 2)) {
-                            if (azul >= 10 && azul <= 50 && verde >= 44 && verde <= 145 && vermelho >= 12 && vermelho <= 75) {
-                                verdeCalcaZecaUrubu++;
-                            }
-                        }
-
-                        // laranja pe zaca urubu
-                        if (alt > (imagemProcessada.height() / 2) + (imagemProcessada.height() / 4)) {
-                            if (azul >= 0 && azul <= 45 && verde >= 107 && verde <= 187 && vermelho >= 188 && vermelho <= 244) {
-                                laranjaPeZecaUrubu++;
-                            }
-                        }
-                    }
-                }
-
-                // Normaliza as características pelo número de pixels totais da imagem
-                vermelhoTopetePicaPau = (vermelhoTopetePicaPau / (imgOriginal.height() * imgOriginal.width())) * 100;
-                amareloBicoPicaPau = (amareloBicoPicaPau / (imgOriginal.height() * imgOriginal.width())) * 100;
-                azulCorpoPicaPau = (azulCorpoPicaPau / (imgOriginal.height() * imgOriginal.width())) * 100;
-                amareloPePicaPau = (amareloPePicaPau / (imgOriginal.height() * imgOriginal.width())) * 100;
-                laranjaBicoZecaUrubu = (laranjaBicoZecaUrubu / (imgOriginal.height() * imgOriginal.width())) * 100;
-                pretoCorpoZecaUrubu = (pretoCorpoZecaUrubu / (imgOriginal.height() * imgOriginal.width())) * 100;
-                verdeCalcaZecaUrubu = (verdeCalcaZecaUrubu / (imgOriginal.height() * imgOriginal.width())) * 100;
-                laranjaPeZecaUrubu = (laranjaPeZecaUrubu / (imgOriginal.height() * imgOriginal.width())) * 100;
-
-                // Grava as características no vetor de características
-                dados[i][0] = vermelhoTopetePicaPau;
-                dados[i][1] = amareloBicoPicaPau;
-                dados[i][2] = azulCorpoPicaPau;
-                dados[i][3] = amareloPePicaPau;
-                dados[i][4] = laranjaBicoZecaUrubu;
-                dados[i][5] = pretoCorpoZecaUrubu;
-                dados[i][6] = verdeCalcaZecaUrubu;
-                dados[i][7] = laranjaPeZecaUrubu;
-
-                exportacao += dados[i][0] + "," + dados[i][1] + "," + dados[i][2] + "," + dados[i][3] + "," + dados[i][4] +
-                        "," + dados[i][5] + "," + dados[i][6] + "," + dados[i][7] + "," + classeDesenho + "\n";
+                exportacao += tmp[0] + "," + tmp[1] + "," + tmp[2] + "," + tmp[3] + "," + tmp[4] +
+                        "," + tmp[5] + "," + tmp[6] + "," + tmp[7] + "," + classeDesenho + "\n";
 
             }
 

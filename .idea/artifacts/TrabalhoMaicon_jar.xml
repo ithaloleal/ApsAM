@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact name="TrabalhoMaicon:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TrabalhoMaicon_jar</output-path>
+    <root id="root">
+      <element id="archive" name="TrabalhoMaicon.jar">
+        <element id="module-output" name="TrabalhoMaicon" />
+      </element>
+      <element id="directory" name="libs">
+        <element id="file-copy" path="C:/javacv-bin/weka.jar" />
+      </element>
+    </root>
+  </artifact>
+</component>
