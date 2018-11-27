@@ -48,11 +48,11 @@ public class TelaCTR implements Initializable {
                 txtcaminho.setText(imagem.getAbsolutePath());
             }
 
-            ObjectInputStream modeloMP = new ObjectInputStream(getClass().getClassLoader().getResourceAsStream("/arquivos/desenhos.model"));
+            ObjectInputStream modeloMP = new ObjectInputStream(getClass().getResourceAsStream("/arquivos/desenhos.model"));
             MultilayerPerceptron perceptron = (MultilayerPerceptron) modeloMP.readObject();
             modeloMP.close();
 
-            ConverterUtils.DataSource ds = new ConverterUtils.DataSource(getClass().getClassLoader().getResourceAsStream("/arquivos/desenhos.arff"));
+            ConverterUtils.DataSource ds = new ConverterUtils.DataSource(getClass().getResourceAsStream("/arquivos/desenhos.arff"));
             Instances instancias = ds.getDataSet();
             instancias.setClassIndex(instancias.numAttributes() - 1);
 
@@ -72,8 +72,8 @@ public class TelaCTR implements Initializable {
             double[] chance = perceptron.distributionForInstance(novo);
 
             DecimalFormat df = new DecimalFormat("0.##");
-            txtPicapau.setText("Pica-pau: " + df.format(chance[0] * 100) + "% chance");
-            txtZecaUrubu.setText("Zeca urubu: " + df.format(chance[1] * 100) + "% chance");
+            txtPicapau.setText("Pica-pau: "+df.format(chance[0] * 100) + "% chance");
+            txtZecaUrubu.setText("Zeca urubu: "+df.format(chance[1] * 100) + "% chance");
             System.out.println(chance[0]);
             System.out.println(chance[1]);
 
