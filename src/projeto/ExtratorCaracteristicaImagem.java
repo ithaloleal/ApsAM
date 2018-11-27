@@ -74,11 +74,9 @@ public class ExtratorCaracteristicaImagem {
                 }
 
                 // preto corpo zeca urubu
-//                if (alt < ((imagemProcessada.getHeight() / 2) + (imagemProcessada.getHeight() / 4))) {
                 if (azul >= 0 && azul <= 56 && verde >= 0 && verde <= 50 && vermelho >= 0 && vermelho <= 40) {
                     pretoCorpoZecaUrubu++;
                 }
-//                }
 
                 // verde calca zaca urubu
                 if (alt > (imagemProcessada.getHeight() / 2)) {
