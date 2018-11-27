@@ -74,21 +74,21 @@ public class ExtratorCaracteristicaImagem {
                 }
 
                 // preto corpo zeca urubu
-                if (alt < ((imagemProcessada.getHeight() / 2) + (imagemProcessada.getHeight() / 4))) {
-                    if (azul >= 0 && azul <= 56 && verde >= 0 && verde <= 50 && vermelho >= 0 && vermelho <= 40) {
-                        pretoCorpoZecaUrubu++;
-                    }
+//                if (alt < ((imagemProcessada.getHeight() / 2) + (imagemProcessada.getHeight() / 4))) {
+                if (azul >= 0 && azul <= 56 && verde >= 0 && verde <= 50 && vermelho >= 0 && vermelho <= 40) {
+                    pretoCorpoZecaUrubu++;
                 }
+//                }
 
                 // verde calca zaca urubu
                 if (alt > (imagemProcessada.getHeight() / 2)) {
-                    if (azul >= 10 && azul <= 50 && verde >= 44 && verde <= 145 && vermelho >= 12 && vermelho <= 75) {
+                    if (azul >= 10 && azul <= 50 && verde >= 44 && verde <= 160 && vermelho >= 12 && vermelho <= 75) {
                         verdeCalcaZecaUrubu++;
                     }
                 }
 
                 // laranja pe zaca urubu
-                if (alt > (imagemProcessada.getHeight() / 2) + (imagemProcessada.getHeight() / 4)) {
+                if (alt > (imagemProcessada.getHeight() / 2)) {
                     if (azul >= 0 && azul <= 45 && verde >= 107 && verde <= 187 && vermelho >= 188 && vermelho <= 244) {
                         laranjaPeZecaUrubu++;
                     }
